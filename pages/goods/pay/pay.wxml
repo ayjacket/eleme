@@ -1,0 +1,9 @@
+<view class="result_contain">
+    <view class="result_img">
+       <icon type="{{resultType}}" size="72"></icon>
+    </view>
+    <view class="result_content">{{resultContent}}</view>
+    <navigator url="{{url}}">
+        <text class="result_to_order" >查看订单</text>
+    </navigator>
+</view>
