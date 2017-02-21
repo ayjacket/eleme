@@ -1120,8 +1120,8 @@ Page({
         payDesc: '',
         deliveryPrice: 4,//配送費
         fold: true,
-        //selectFoods: [{ price: 20, count: 2 }]
-        currentTab: 0,
+        selectFoods: [{ price: 20, count: 2 }],
+        cartShow: 'none'
     },
     // selectFoods: function (event) {
     //     var food = event.currentTarget.dataset.food;
@@ -1231,23 +1231,7 @@ Page({
             url: '../goods/pay/pay?resultType=' + resultType
         })
     },
-   // 滑动切换tab 
-    bindChange: function (e) {
-        var that = this;
-        that.setData({ currentTab: e.detail.current });
-
-    },
-    // 点击tab切换 
-    swichNav: function (e) {
-        var that = this;
-        if (this.data.currentTab === e.target.dataset.current) {
-            return false;
-        } else {
-            that.setData({
-                currentTab: e.target.dataset.current
-            })
-        }
-    },
+    //彈起購物車
     toggleList: function () {
         if (!this.data.totalCount) {
             return;
@@ -1255,7 +1239,22 @@ Page({
         this.setData({
             fold: !this.data.fold,
         })
-        console.log(this.data.fold);
+        var fold = this.data.fold
+        //console.log(this.data.fold);
+        this.cartShow(fold)
+    },
+    cartShow: function (fold) {
+        console.log(fold);
+       if (fold == false) {
+            this.setData({
+                cartShow: 'block',
+            })
+        } else {
+            this.setData({
+                cartShow: 'none',
+            })
+        }
+        console.log(this.data.cartShow);
     },
     listShow() {
         if (!this.data.totalCount) {
