@@ -9,7 +9,6 @@
     "backgroundColor": "#f2f2f2",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#787878",
-    "navigationBarTextStyle": "white",
-    "navigationBarTitleText": "餓了麽小程序"
+    "navigationBarTextStyle": "white"
   }
 }

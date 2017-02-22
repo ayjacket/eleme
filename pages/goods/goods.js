@@ -1151,12 +1151,12 @@ Page({
         var parentIndex = e.currentTarget.dataset.parentindex;
         this.data.goods.forEach((good) => {
             good.foods.forEach((food) => {
+                var num = this.data.goods[parentIndex].foods[index].Count;
+                var mark = 'a' + index + 'b' + parentIndex
                 if (food.Count > 0) {
                     this.data.goods[parentIndex].foods[index].Count--
-                    var mark = 'a' + index + 'b' + parentIndex
                     var price = this.data.goods[parentIndex].foods[index].price;
-                    var num = this.data.goods[parentIndex].foods[index].Count;
-                    var obj = { price: price, num: num, mark: mark };
+                    var obj = { price: price, num: num, mark: mark, name: name, index: index, parentIndex: parentIndex };
                     var carArray1 = this.data.carArray.filter(item => item.mark != mark);
                     carArray1.push(obj);
                     console.log(carArray1);
@@ -1169,8 +1169,18 @@ Page({
                         payDesc: this.payDesc()
                     })
                 }
+                if (num > 0) {
+                    var carArray1 = this.data.carArray.filter(item => item.num > 0)
+                    console.log(carArray1)
+                    this.setData({
+                        carArray: carArray1,
+                    })
+                }
             })
         })
+    },
+    decreaseShopCart: function (e) {
+        this.decreaseCart(e);
     },
     //添加到购物车
     addCart(e) {
@@ -1180,7 +1190,8 @@ Page({
         var mark = 'a' + index + 'b' + parentIndex
         var price = this.data.goods[parentIndex].foods[index].price;
         var num = this.data.goods[parentIndex].foods[index].Count;
-        var obj = { price: price, num: num, mark: mark };
+        var name = this.data.goods[parentIndex].foods[index].name;
+        var obj = { price: price, num: num, mark: mark, name: name, index: index, parentIndex: parentIndex };
         var carArray1 = this.data.carArray.filter(item => item.mark != mark)
         carArray1.push(obj)
         console.log(carArray1);
@@ -1192,6 +1203,9 @@ Page({
         this.setData({
             payDesc: this.payDesc()
         })
+    },
+    addShopCart: function (e) {
+        this.addCart(e);
     },
     //计算总价
     calTotalPrice: function () {
@@ -1245,7 +1259,7 @@ Page({
     },
     cartShow: function (fold) {
         console.log(fold);
-       if (fold == false) {
+        if (fold == false) {
             this.setData({
                 cartShow: 'block',
             })
