@@ -13,7 +13,7 @@
   <scroll-view scroll-y="true" style="height: 500px;" scroll-into-view="{{toView}}" class="foods-wrapper">
     <view wx:for="{{goods}}" class="food-list food-list-hook" wx:for-index="parentIndex">
       <view id="order{{parentIndex}}" class="title">{{item.name}}</view>
-      <view wx:for="{{item.foods}}" class="food-item" wx:for-item="food" data-food="{{food}}" bindtap="selectFoods">
+      <view wx:for="{{item.foods}}" class="food-item" wx:for-item="food" data-food="{{food}}">
         <view class="icon">
           <image src="{{food.icon}}" style="width: 57px;height: 57px"></image>
         </view>
@@ -75,12 +75,12 @@
           <view class="list-content">
             <view class="shopcart-food" wx:for="{{carArray}}">
               <text class="name">{{item.name}}</text>
-              <view class="price" >
+              <view class="price" wx:if="{{item.num > 0}}">
                 <span>￥{{item.price*item.num}}</span> 
               </view>
 
               <!--cartControl-->
-              <view class="cartControl-wrapper" style="bottom:10px;">
+              <view class="cartControl-wrapper" style="bottom:10px;" wx:if="{{item.num > 0}}">
                 <view class="cartControl" style="width:80px;">
                   <view name="fade">
                     <view class="cart-decrease" style="display:inline-block;" data-item-index="{{item.index}}" data-parentIndex="{{item.parentIndex}}" catchtap="decreaseShopCart">
@@ -91,6 +91,7 @@
                   </view>
                 </view>
               </view>
+              <!--cartControl-->
             </view>
           </view>
         </view>

@@ -1123,21 +1123,6 @@ Page({
         selectFoods: [{ price: 20, count: 2 }],
         cartShow: 'none'
     },
-    // selectFoods: function (event) {
-    //     var food = event.currentTarget.dataset.food;
-    //     console.log(food);
-    //     console.log(this.data.goods)
-    //     let foods = [];
-    //     this.data.goods.forEach((good) => {
-    //         good.foods.forEach((food) => {
-    //             // console.log(food)
-    //             if (food.sellCount) {
-    //                 foods.push(food);
-    //                 console.log(foods);
-    //             }
-    //         })
-    //     })
-    // },
     selectMenu: function (e) {
         var index = e.currentTarget.dataset.itemIndex;
         this.setData({
@@ -1149,37 +1134,40 @@ Page({
     decreaseCart: function (e) {
         var index = e.currentTarget.dataset.itemIndex;
         var parentIndex = e.currentTarget.dataset.parentindex;
-        this.data.goods.forEach((good) => {
-            good.foods.forEach((food) => {
-                var num = this.data.goods[parentIndex].foods[index].Count;
-                var mark = 'a' + index + 'b' + parentIndex
-                if (food.Count > 0) {
-                    this.data.goods[parentIndex].foods[index].Count--
-                    var price = this.data.goods[parentIndex].foods[index].price;
-                    var obj = { price: price, num: num, mark: mark, name: name, index: index, parentIndex: parentIndex };
-                    var carArray1 = this.data.carArray.filter(item => item.mark != mark);
-                    carArray1.push(obj);
-                    console.log(carArray1);
-                    this.setData({
-                        carArray: carArray1,
-                        goods: this.data.goods
-                    })
-                    this.calTotalPrice()
-                    this.setData({
-                        payDesc: this.payDesc()
-                    })
-                }
-                if (num > 0) {
-                    var carArray1 = this.data.carArray.filter(item => item.num > 0)
-                    console.log(carArray1)
-                    this.setData({
-                        carArray: carArray1,
-                    })
-                }
-            })
+        this.data.goods[parentIndex].foods[index].Count--
+        var num = this.data.goods[parentIndex].foods[index].Count;
+        var mark = 'a' + index + 'b' + parentIndex
+        var price = this.data.goods[parentIndex].foods[index].price;
+        var obj = { price: price, num: num, mark: mark, name: name, index: index, parentIndex: parentIndex };
+        var carArray1 = this.data.carArray.filter(item => item.mark != mark);
+        carArray1.push(obj);
+        console.log(carArray1);
+        this.setData({
+            carArray: carArray1,
+            goods: this.data.goods
         })
+        this.calTotalPrice()
+        this.setData({
+            payDesc: this.payDesc(),
+        })
+        //关闭弹起
+        var count1 = 0
+        for (let i = 0; i < carArray1.length; i++) {
+            if (carArray1[i].num == 0) {
+                count1++;
+            }
+        }
+        //console.log(count1)
+        if (count1 == carArray1.length) {
+            if (num == 0) {
+                this.setData({
+                    cartShow: 'none'
+                })
+            }
+        }
     },
     decreaseShopCart: function (e) {
+        console.log('1');
         this.decreaseCart(e);
     },
     //添加到购物车
@@ -1269,25 +1257,6 @@ Page({
             })
         }
         console.log(this.data.cartShow);
-    },
-    listShow() {
-        if (!this.data.totalCount) {
-            this.data.fold = true;
-            return false;
-        }
-        let show = !this.fold;
-        // if (show) {
-        //     this.$nextTick(() => {
-        //         if (!this.scroll) {
-        //             this.scroll = new BScroll(this.$refs.listContent, {
-        //                 click: true
-        //             });
-        //         } else {
-        //             this.scroll.refresh();
-        //         }
-        //     });
-        // }
-        return show;
     },
     onLoad: function (options) {
         // 页面初始化 options为页面跳转所带来的参数
