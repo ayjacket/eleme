@@ -1121,7 +1121,8 @@ Page({
         deliveryPrice: 4,//配送費
         fold: true,
         selectFoods: [{ price: 20, count: 2 }],
-        cartShow: 'none'
+        cartShow: 'none',
+        status: 0,
     },
     selectMenu: function (e) {
         var index = e.currentTarget.dataset.itemIndex;
@@ -1257,6 +1258,12 @@ Page({
             })
         }
         console.log(this.data.cartShow);
+    },
+    tabChange: function (e) {
+        var showtype = e.target.dataset.type;
+        this.setData({
+            status: showtype,
+        });
     },
     onLoad: function (options) {
         // 页面初始化 options为页面跳转所带来的参数
